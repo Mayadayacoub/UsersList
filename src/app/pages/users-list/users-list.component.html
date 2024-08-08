@@ -1,0 +1,69 @@
+<div
+  class="container-fluid d-flex flex-column justify-content-center align-items-center py-2 main"
+>
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="example-form">
+        <mat-form-field class="example-full-width">
+          <mat-label>Search By ID:</mat-label>
+          <input
+            matInput
+            placeholder="Enter ID to search"
+            (input)="filterUsers($event)"
+          />
+        </mat-form-field>
+      </div>
+      <ul class="list-group">
+        <h2>Searched User By Id:</h2>
+        <li
+          *ngFor="let user of filteredUsersList | filterById : searchText"
+          class="list-group-item"
+        >
+          <app-user-details [user]="user"></app-user-details>
+        </li>
+      </ul>
+    </div>
+
+    <div class="col-lg-6 mt-lg-0 float-right">
+      <h2>User List</h2>
+      <ul class="list-group">
+        <li *ngFor="let user of users" class="list-group-item">
+          <app-user-details [user]="user"></app-user-details>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="row my-4">
+    <nav aria-label="Page navigation example">
+      <ul class="pagination">
+        <li class="page-item" [class.disabled]="currentPage === 1">
+          <button
+            class="page-link"
+            (click)="getUsersPerPage(currentPage - 1)"
+            [disabled]="currentPage === 1"
+          >
+            Previous
+          </button>
+        </li>
+        <li
+          *ngFor="let pageNumber of pageNumbers"
+          class="page-item"
+          [class.active]="currentPage === pageNumber"
+        >
+          <button class="page-link" (click)="getUsersPerPage(pageNumber)">
+            {{ pageNumber }}
+          </button>
+        </li>
+        <li class="page-item" [class.disabled]="currentPage === totalPages">
+          <button
+            class="page-link"
+            (click)="getUsersPerPage(currentPage + 1)"
+            [disabled]="currentPage === totalPages"
+          >
+            Next
+          </button>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>
